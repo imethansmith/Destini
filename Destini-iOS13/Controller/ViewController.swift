@@ -14,32 +14,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var choice1Button: UIButton!
     @IBOutlet weak var choice2Button: UIButton!
     
-    var pathTaken = 0
-    
-    let stories = [Story(title: "You see a fork in the road", choice1: "Take a left.", choice2: "Take a right."),
-                   Story(title: "You see a tiger", choice1: "Shout for help!", choice2: "Play dead."),
-                   Story(title: "You find a treasure chest", choice1: "Open it.", choice2: "Check for traps.")
-    ]
+    var story = StoryBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        storyLabel.text = stories[0].title
-        choice1Button.setTitle(stories[0].choice1, for: .normal)
-        choice2Button.setTitle(stories[0].choice2, for: .normal)
+        updateUI(nextStory: story.stories[0])
+    }
+    
+    func updateUI(nextStory: Story) {
+        storyLabel.text = nextStory.title
+        choice1Button.setTitle(nextStory.choice1, for: .normal)
+        choice2Button.setTitle(nextStory.choice2, for: .normal)
     }
 
     @IBAction func choiceMade(_ sender: UIButton) {
-        if sender.currentTitle == stories[pathTaken].choice1 {
-            pathTaken += 1
-            storyLabel.text = stories[pathTaken].title
-            choice1Button.setTitle(stories[pathTaken].choice1, for: .normal)
-            choice2Button.setTitle(stories[pathTaken].choice2, for: .normal)
-        } else {
-            pathTaken += 2
-            storyLabel.text = stories[pathTaken].title
-            choice1Button.setTitle(stories[pathTaken].choice1, for: .normal)
-            choice2Button.setTitle(stories[pathTaken].choice2, for: .normal)
-        }
+        var result = story.nextStory(userChoice: sender.currentTitle!)
+        updateUI(nextStory: result)
     }
     
 }
