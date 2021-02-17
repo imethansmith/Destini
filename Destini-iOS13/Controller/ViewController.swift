@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var choice1Button: UIButton!
     @IBOutlet weak var choice2Button: UIButton!
     
+    var pathTaken = 0
+    
     let stories = [Story(title: "You see a fork in the road", choice1: "Take a left.", choice2: "Take a right."),
                    Story(title: "You see a tiger", choice1: "Shout for help!", choice2: "Play dead."),
                    Story(title: "You find a treasure chest", choice1: "Open it.", choice2: "Check for traps.")
@@ -27,14 +29,16 @@ class ViewController: UIViewController {
     }
 
     @IBAction func choiceMade(_ sender: UIButton) {
-        if sender.currentTitle == "Take a left" {
-            storyLabel.text = stories[1].title
-            choice1Button.setTitle(stories[1].choice1, for: .normal)
-            choice2Button.setTitle(stories[1].choice2, for: .normal)
+        if sender.currentTitle == stories[pathTaken].choice1 {
+            pathTaken += 1
+            storyLabel.text = stories[pathTaken].title
+            choice1Button.setTitle(stories[pathTaken].choice1, for: .normal)
+            choice2Button.setTitle(stories[pathTaken].choice2, for: .normal)
         } else {
-            storyLabel.text = stories[2].title
-            choice1Button.setTitle(stories[2].choice1, for: .normal)
-            choice2Button.setTitle(stories[2].choice2, for: .normal)
+            pathTaken += 2
+            storyLabel.text = stories[pathTaken].title
+            choice1Button.setTitle(stories[pathTaken].choice1, for: .normal)
+            choice2Button.setTitle(stories[pathTaken].choice2, for: .normal)
         }
     }
     
