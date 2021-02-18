@@ -19,11 +19,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Load first story into View, load default story
         currentStory = story.stories[0]
         updateUI(nextStory: story.stories[0])
     }
     
     func updateUI(nextStory: Story) {
+        
+        // Update currentStory, set Interface with new constraints
         currentStory = nextStory
         storyLabel.text = currentStory?.title
         choice1Button.setTitle(currentStory?.choice1, for: .normal)
@@ -31,6 +35,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func choiceMade(_ sender: UIButton) {
+        
+        // Get answer chosen, check with current story, retrieve next story
         if sender.currentTitle == currentStory?.choice1 {
             updateUI(nextStory: story.nextStory(userChoice: currentStory!, choiceMade: 1))
         } else {
